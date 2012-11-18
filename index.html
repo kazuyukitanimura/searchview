@@ -2,8 +2,15 @@
 <html>
   <head>
     <title>Searchview</title>
+    <link rel='stylesheet' href='style.css'>
+    <script src='http://code.jquery.com/jquery-latest.min.js'></script>
   </head>
   <body>
-    <h1>Content Here!</h1> 
+    <h1>Searchview</h1> 
+    <form onsubmit='request(); return false;'>
+      <input type="text" id="q">
+      <input type="submit" value="Search!">
+    </form>
   </body>
+  <script src='client.js'></script>
 </html>
