@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Searchview</title>
-    <link rel='stylesheet' href='style.css'>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
     <script src='http://code.jquery.com/jquery-latest.min.js'></script>
+    <script src='/javascripts/client.js'></script>
   </head>
   <body>
-    <h1>Searchview</h1> 
+    <h1><%= title %></h1>
     <form onsubmit='request(); return false;'>
       <input type="text" id="q">
       <input type="submit" value="Search!">
     </form>
   </body>
-  <script src='client.js'></script>
 </html>
