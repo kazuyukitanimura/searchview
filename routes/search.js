@@ -24,6 +24,7 @@ exports.index = function(req, res) {
 
   if(cache[req.query.q]){
     clientRes.send(JSON.stringify(cache[req.query.q]));
+    return;
   }
   // TODO make request stereaming
   request(reqobj, function(err, res, body) {

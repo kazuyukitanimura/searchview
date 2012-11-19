@@ -1,12 +1,43 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #83878D;
 }
 
-a {
-  color: #00B7FF;
+h1 {
+  display: inline;
+  text-shadow: 1px 1px 1px #000;
+}
+
+a.l {
+  color: #FFF;
+  text-decoration: none;
+}
+
+a.l h3 {
+  text-decoration: underline;
+}
+
+a.l div.url {
+  color: #C2C8CD;
+  margin-top: -16px;
+  margin-bottom: 10px;
+}
+
+form {
+  display: inline;
 }
 
 input#q {
   width: 527px;
+}
+
+iframe {
+  height: 527px;
+  width: 90%;
+  border:5px solid #CDCDCD;
+  background-color: #FFF;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
