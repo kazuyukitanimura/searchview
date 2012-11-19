@@ -25,7 +25,7 @@ $(function() {
       for (var i = 0, l = links.length; i < l; i++) {
         console.log(links[i]);
         var link = links[i];
-        var page = '<a class="l" href="' + link.url + '"><h3>' + link.title + '</h3><div class="url">' + link.url + '</div><iframe src="' + link.url + '" sandbox="allow-scripts"></iframe></a>'
+        var page = '<a id="link' + i + '" class="l" href="' + link.url + '"><h3>' + link.title + '</h3><div class="url">' + link.url + '</div><iframe src="' + link.url + '" sandbox="allow-scripts" scrolling="no"></iframe></a>'
         $body.append(page);
       }
     });
