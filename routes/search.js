@@ -16,7 +16,7 @@ var reqobj = {
 };
 var base_url = 'http://www.google.com/search?q=';
 // for test
-var cache = {}
+var cache = {};
 
 exports.index = function(req, res) {
   console.log(req.query.q);
