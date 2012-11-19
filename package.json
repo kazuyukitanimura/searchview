@@ -1,12 +1,26 @@
 {
-  "name": "searchview",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
+  "name": "searchview"
+, "description": "Column based search engine result"
+, "version": "0.0.1"
+, "private": true
+, "scripts": {
     "start": "node app"
-  },
-  "dependencies": {
-    "express": "3.0.3",
-    "ejs": "*"
+  , "test": "mocha"
   }
+, "dependencies": {
+    "express": ">= 3.0.3"
+  , "ejs": ">= 0.8.3"
+  , "cheerio": ">= 0.10.3"
+  , "request": ">= 2.12.0"
+  }
+, "engine": "node >= 0.8.14"
+, "author": {
+    "name": "kazuyukitanimura",
+    "email": "kazuyukitanimura@gmail.com"
+  }
+, "repository": {
+    "type": "git",
+    "url": "git://github.com/kazuyukitanimura/searchview.git"
+  }
+, "license": "MIT"
 }

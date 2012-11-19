@@ -5,6 +5,7 @@
 var express = require('express');
 var routes = require('./routes');
 var user = require('./routes/user');
+var search = require('./routes/search');
 var http = require('http');
 var path = require('path');
 
@@ -21,7 +22,7 @@ app.configure(function() {
   app.use(express.cookieParser('your secret here'));
   app.use(express.session());
   app.use(app.router);
-  app.use(express.static(path.join(__dirname, 'public')));
+  app.use(express['static'](path.join(__dirname, 'public')));
 });
 
 app.configure('development', function() {
@@ -30,6 +31,7 @@ app.configure('development', function() {
 
 app.get('/', routes.index);
 app.get('/users', user.list);
+app.get('/search', search.index);
 
 http.createServer(app).listen(app.get('port'), function() {
   console.log("Express server listening on port " + app.get('port'));

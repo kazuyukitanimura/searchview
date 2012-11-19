@@ -1,5 +1,5 @@
 $(function() {
-  var base_url = 'http://www.google.com/#hl=en';
+  var search_url = 'search';
   var self = this;
   var $q = $('input#q');
 
@@ -16,8 +16,11 @@ $(function() {
     var params = {
       q: q
     };
-    $.get(base_url, params, function(data) {
-      console.log(data);
+    $.get(search_url, params, function(data) {
+      var links = JSON.parse(data);
+      for (var i = 0, l = links.length; i < l; i++) {
+        console.log(links[i]);
+      }
     });
   };
 });
