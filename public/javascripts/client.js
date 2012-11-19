@@ -3,7 +3,10 @@ $(function() {
   var self = this;
   var $q = $('input#q').focus();
   var maxPosition = 9;
+  var topPosition = - 1;
+  //var position = topPosition;
   var baseLinkId = 'link';
+  var scrollDone = true;
 
   $q.keydown(function(e) {
     var keyCode = (e.keyCode || e.which);
@@ -17,6 +20,7 @@ $(function() {
   self.request = function() {
     // clean up old results
     $('a.l').remove();
+    location.hash = '';
 
     var q = encodeURIComponent($q.val());
     console.log(q);
@@ -39,27 +43,34 @@ $(function() {
   };
 
   var smoothScroll = function(scrollAmount) {
-    console.log(location.hash);
-    var position = parseInt(location.hash.replace('#' + baseLinkId, ''), 10);
-    console.log(position);
-    if (isNaN(position)) {
-      position = - 1;
+    if (!scrollDone) {
+      // too busy!
+      return;
+    } else {
+      scrollDone = false;
     }
-    position += scrollAmount;
+    var position = parseInt(location.hash.replace('#' + baseLinkId, ''), 10);
+    if (isNaN(position)) {
+      position = topPosition;
+    }
+    position = Math.max(topPosition, Math.min(maxPosition, position + scrollAmount));
     if (position < 0) {
       $('html,body').animate({
         scrollTop: 0
       },
-      150, 'easeOutQuad', function() {});
+      150, 'easeOutQuad', function() {
+        location.hash = '';
+        setTimeout(function(){scrollDone = true;}, 900);
+      });
     } else {
-      $target = $('#' + baseLinkId + position);
-      if ($target) {
-        var $targetOffset = $target.offset().top;
+      var $targetOffset = $('#' + baseLinkId + position).offset();
+      if ($targetOffset) {
         $('html,body').animate({
-          scrollTop: $targetOffset
+          scrollTop: $targetOffset.top
         },
         350, 'easeOutQuad', function() {
           location.hash = baseLinkId + position;
+          setTimeout(function(){scrollDone = true;}, 900);
         });
       }
     }
@@ -82,5 +93,31 @@ $(function() {
     }
   });
 
+  //var lastDelta = 0;
+  $(window).on('DOMMouseScroll mousewheel', function(e) {
+    // http://stackoverflow.com/questions/5527601/normalizing-mousewheel-speed-across-browsers/5542105#5542105
+    e = e.originalEvent;
+    //var delta = 0;
+    //var w = e.wheelDelta;
+    //var d = e.detail;
+    //if (d) {
+    //  if (w) {
+    //    delta = w / d / 40 * d > 0 ? 1: - 1; // Opera
+    //  } else {
+    //    delta = - d / 3; // Firefox;         TODO: do not /3 for OS X
+    //  }
+    //} else {
+    //  delta = w / 120; // IE/Safari/Chrome TODO: /3 for Chrome OS X
+    //}
+    //if (lastDelta < delta) {
+    //  scrollDone = true;
+    //}
+    //lastDelta = delta;
+
+    var direction = (e.detail < 0 || e.wheelDelta > 0) ? - 1: 1;
+    smoothScroll(direction);
+    e.preventDefault();
+    e.returnValue = false;
+  });
 });
 
