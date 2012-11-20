@@ -60,7 +60,6 @@ $(function() {
       position = topPosition;
     }
     position = Math.max(topPosition, Math.min(maxPosition, position + direction));
-    console.log(position);
     if (position < 0) {
       $('html,body').animate({
         scrollTop: 0
@@ -112,7 +111,6 @@ $(function() {
     // http://stackoverflow.com/questions/5527601/normalizing-mousewheel-speed-across-browsers/5542105#5542105
     e = e.originalEvent;
     var direction = (e.detail < 0 || e.wheelDelta > 0) ? - 1: 1;
-    console.log(direction);
     eObj = setTimeout(smoothScroll.bind(null, direction, true), 1000);
   });
 
