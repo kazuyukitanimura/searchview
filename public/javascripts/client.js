@@ -7,6 +7,7 @@ $(function() {
   //var position = topPosition;
   var baseLinkId = 'link';
   var scrollDone = true;
+  var offSet = 50;
 
   $q.keydown(function(e) {
     var keyCode = (e.keyCode || e.which);
@@ -38,11 +39,14 @@ $(function() {
       }
       $('a.l').waypoint(function(e, direction) {
         location.hash = $(this).attr('id');
+      },
+      {
+        offset: offset
       });
     });
   };
 
-  var smoothScroll = function(scrollAmount) {
+  var smoothScroll = function(scrollAmount, mouseScroll) {
     if (!scrollDone) {
       // too busy!
       return;
@@ -60,64 +64,77 @@ $(function() {
       },
       150, 'easeOutQuad', function() {
         location.hash = '';
-        setTimeout(function(){scrollDone = true;}, 900);
+        scrollDone = true;
       });
     } else {
       var $targetOffset = $('#' + baseLinkId + position).offset();
       if ($targetOffset) {
+        var $prevTargetOffset = $('#' + baseLinkId + (position - 1)).offset();
+        if ($prevTargetOffset && mouseScroll) {
+          var $scrollTop = $('body').scrollTop();
+          // magic number
+          if (Math.abs($scrollTop - $prevTargetOffset.top) * 2 < Math.abs($targetOffset.top - $scrollTop)) {
+            $targetOffset = $prevTargetOffset;
+          }
+          console.log([$scrollTop, $targetOffset.top, $prevTargetOffset.top].join(', '));
+        }
         $('html,body').animate({
-          scrollTop: $targetOffset.top
+          scrollTop: $targetOffset.top - offSet
         },
         350, 'easeOutQuad', function() {
           location.hash = baseLinkId + position;
-          setTimeout(function(){scrollDone = true;}, 900);
+          scrollDone = true;
         });
       }
     }
   };
 
-  $('h1').waypoint(function(e, direction) {
-    location.hash = '';
-  });
-
   $('body').keydown(function(e) {
     var keyCode = (e.keyCode || e.which);
     //if (keyCode === 37 || keyCode === 38 || (keyCode === 9 && keyCode === 32)) { // left arrow, up arrow, shift+space
     if (keyCode === 38) { // up arrow
-      smoothScroll( - 1); // scroll up
+      smoothScroll( - 1, false); // scroll up
       e.preventDefault();
       //} else if (keyCode === 39 || keyCode === 40 || keyCode === 32) { // right arrow, down arrow, space
     } else if (keyCode === 40) { // down arrow
-      smoothScroll(1); // scroll down
+      smoothScroll(1, false); // scroll down
       e.preventDefault();
     }
   });
 
-  //var lastDelta = 0;
+  var eObj = null;
   $(window).on('DOMMouseScroll mousewheel', function(e) {
+    clearTimeout(eObj);
     // http://stackoverflow.com/questions/5527601/normalizing-mousewheel-speed-across-browsers/5542105#5542105
     e = e.originalEvent;
-    //var delta = 0;
-    //var w = e.wheelDelta;
-    //var d = e.detail;
-    //if (d) {
-    //  if (w) {
-    //    delta = w / d / 40 * d > 0 ? 1: - 1; // Opera
-    //  } else {
-    //    delta = - d / 3; // Firefox;         TODO: do not /3 for OS X
-    //  }
-    //} else {
-    //  delta = w / 120; // IE/Safari/Chrome TODO: /3 for Chrome OS X
-    //}
-    //if (lastDelta < delta) {
-    //  scrollDone = true;
-    //}
-    //lastDelta = delta;
-
     var direction = (e.detail < 0 || e.wheelDelta > 0) ? - 1: 1;
-    smoothScroll(direction);
-    e.preventDefault();
-    e.returnValue = false;
+    console.log(direction);
+    eObj = setTimeout(smoothScroll.bind(null, direction, true), 1000);
   });
-});
 
+  //var eObj = null;
+  //$(window).on('DOMMouseScroll mousewheel', function(e) {
+  //  clearTimeout(eObj);
+  //  // http://stackoverflow.com/questions/5527601/normalizing-mousewheel-speed-across-browsers/5542105#5542105
+  //  e = e.originalEvent;
+  //  var delta = 0;
+  //  var w = e.wheelDelta;
+  //  var d = e.detail;
+  //  if (d) {
+  //    if (w) {
+  //      delta = w / d / 40 * d > 0 ? 1: - 1; // Opera
+  //    } else {
+  //      delta = - d / 3; // Firefox;         TODO: do not /3 for OS X
+  //    }
+  //  } else {
+  //    delta = w / 120; // IE/Safari/Chrome TODO: /3 for Chrome OS X
+  //  }
+  //  if (delta > 0.02) {
+  //    eObj = setTimeout(smoothScroll.bind(null, -1, true), 1000);
+  //  } else if (delta < - 0.02) {
+  //    eObj = setTimeout(smoothScroll.bind(null, 1, true), 1000);
+  //  } else {
+  //    clearTimeout(eObj);
+  //  }
+  //});
+});
