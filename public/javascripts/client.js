@@ -5,6 +5,7 @@ $(function() {
   var maxPosition = 9;
   var topPosition = - 1;
   //var position = topPosition;
+  var curHash = location.hash;
   var baseLinkId = 'link';
   var scrollDone = true;
   var offSet = 50;
@@ -31,33 +32,35 @@ $(function() {
     $body = $('body');
     $.get(search_url, params, function(data) {
       var links = JSON.parse(data);
-      maxPosition = links.length;
-      for (var i = 0; i < maxPosition; i++) {
+      maxPosition = links.length - 1;
+      for (var i = 0; i <= maxPosition; i++) {
         var link = links[i];
         var page = '<a id="' + baseLinkId + i + '" class="l" target="_blank" href="' + link.url + '"><h3>' + link.title + '</h3><div class="url">' + link.url + '</div><iframe src="' + link.url + '" sandbox scrolling="no"></iframe></a>';
         $body.append(page);
       }
       $('a.l').waypoint(function(e, direction) {
-        location.hash = $(this).attr('id');
-      },
-      {
-        offset: offset
+        curHash = $(this).attr('id');
+      // waypoint bug, with offset it does not fire the event correctly
+      //},
+      //{
+      //  offset: offset
       });
     });
   };
 
-  var smoothScroll = function(scrollAmount, mouseScroll) {
+  var smoothScroll = function(direction, mouseScroll) {
     if (!scrollDone) {
       // too busy!
       return;
     } else {
       scrollDone = false;
     }
-    var position = parseInt(location.hash.replace('#' + baseLinkId, ''), 10);
+    var position = parseInt(curHash.replace(baseLinkId, ''), 10);
     if (isNaN(position)) {
       position = topPosition;
     }
-    position = Math.max(topPosition, Math.min(maxPosition, position + scrollAmount));
+    position = Math.max(topPosition, Math.min(maxPosition, position + direction));
+    console.log(position);
     if (position < 0) {
       $('html,body').animate({
         scrollTop: 0
@@ -69,20 +72,21 @@ $(function() {
     } else {
       var $targetOffset = $('#' + baseLinkId + position).offset();
       if ($targetOffset) {
-        var $prevTargetOffset = $('#' + baseLinkId + (position - 1)).offset();
+        var $prevTargetOffset = $('#' + baseLinkId + (position - direction)).offset();
         if ($prevTargetOffset && mouseScroll) {
           var $scrollTop = $('body').scrollTop();
           // magic number
           if (Math.abs($scrollTop - $prevTargetOffset.top) * 2 < Math.abs($targetOffset.top - $scrollTop)) {
             $targetOffset = $prevTargetOffset;
+            position -= direction;
           }
-          console.log([$scrollTop, $targetOffset.top, $prevTargetOffset.top].join(', '));
         }
         $('html,body').animate({
           scrollTop: $targetOffset.top - offSet
         },
         350, 'easeOutQuad', function() {
           location.hash = baseLinkId + position;
+          curHash = baseLinkId + position;
           scrollDone = true;
         });
       }
