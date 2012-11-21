@@ -8,7 +8,7 @@ $(function() {
   var curHash = location.hash;
   var baseLinkId = 'link';
   var scrollDone = true;
-  var offSet = 60;
+  var offSet = 70;
 
   $q.keydown(function(e) {
     var keyCode = (e.keyCode || e.which);
@@ -23,20 +23,28 @@ $(function() {
     // clean up old results
     $('a.l').remove();
     location.hash = '';
+    $('div.hero-unit').remove();
+    // Insert spinning load sign
+    $container = $('div#main.container');
+    $spinner = $('<ul class="spinner"><li></li><li></li><li></li><li></li></ul>');
+    $container.prepend($spinner);
 
     var q = encodeURIComponent($q.val());
     console.log(q);
     var params = {
       q: q
     };
-    $body = $('body');
     $.get(search_url, params, function(data) {
+      // remove the spinner
+      $spinner.remove();
+      $footer = $('footer');
+
       var links = JSON.parse(data);
       maxPosition = links.length - 1;
       for (var i = 0; i <= maxPosition; i++) {
         var link = links[i];
         var page = '<a id="' + baseLinkId + i + '" class="l" target="_blank" href="' + link.url + '"><h3>' + link.title + '</h3><div class="url">' + link.url + '</div><iframe src="' + link.url + '" sandbox scrolling="no"></iframe></a>';
-        $body.append(page);
+        $footer.before(page);
       }
       $('a.l').waypoint(function(e, direction) {
         curHash = $(this).attr('id');
