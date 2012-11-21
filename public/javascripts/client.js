@@ -8,7 +8,7 @@ $(function() {
   var curHash = location.hash;
   var baseLinkId = 'link';
   var scrollDone = true;
-  var offSet = 50;
+  var offSet = 60;
 
   $q.keydown(function(e) {
     var keyCode = (e.keyCode || e.which);
