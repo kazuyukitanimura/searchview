@@ -8,7 +8,7 @@ $(function() {
   var curHash = location.hash;
   var baseLinkId = 'link';
   var scrollDone = true;
-  var offSet = 70;
+  var offSet = 40;
 
   $q.keydown(function(e) {
     var keyCode = (e.keyCode || e.which);
@@ -21,7 +21,7 @@ $(function() {
 
   self.request = function() {
     // clean up old results
-    $('a.l').remove();
+    $('div.row-fluid').remove();
     location.hash = '';
     $('div.hero-unit').remove();
     // Insert spinning load sign
@@ -30,7 +30,10 @@ $(function() {
     $container.prepend($spinner);
 
     var q = encodeURIComponent($q.val());
-    console.log(q);
+    // add the search query without reloading
+    if(history.pushState) {
+      history.pushState({"id":100}, document.title, location.protocol + "?q=" + q);
+    }
     var params = {
       q: q
     };
@@ -43,10 +46,10 @@ $(function() {
       maxPosition = links.length - 1;
       for (var i = 0; i <= maxPosition; i++) {
         var link = links[i];
-        var page = '<a id="' + baseLinkId + i + '" class="l" target="_blank" href="' + link.url + '"><h3>' + link.title + '</h3><div class="url">' + link.url + '</div><iframe src="' + link.url + '" sandbox scrolling="no"></iframe></a>';
+        var page = '<div id="' + baseLinkId + i + '" class="row-fluid"><a class="span12" target="_blank" href="' + link.url + '"><h3>' + link.title + '</h3><div class="url">' + link.url + '</div><iframe src="' + link.url + '" sandbox scrolling="no"></iframe></a></div>';
         $footer.before(page);
       }
-      $('a.l').waypoint(function(e, direction) {
+      $('div.row-fluid').waypoint(function(e, direction) {
         curHash = $(this).attr('id');
       // waypoint bug, with offset it does not fire the event correctly
       //},
@@ -147,4 +150,10 @@ $(function() {
   //    clearTimeout(eObj);
   //  }
   //});
+
+  // if there are search parameters, request it
+  if (location.search) {
+    $q.val(decodeURIComponent(location.search.match(/[?&]q=(.*)[&#]?/)[1]));
+    self.request();
+  }
 });

@@ -1,33 +1,38 @@
 body {
   padding-top: 60px;
   padding-bottom: 40px;
-  background: rgb(234,234,234); /* Old browsers */
-  background: -moz-radial-gradient(center, ellipse cover,  rgba(234,234,234,1) 0%, rgba(206,206,206,1) 100%); /* FF3.6+ */
-  background: -webkit-radial-gradient(center, ellipse cover,  rgba(234,234,234,1) 0%,rgba(206,206,206,1) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-radial-gradient(center, ellipse cover,  rgba(234,234,234,1) 0%,rgba(206,206,206,1) 100%); /* Opera 12+ */
-  background: -ms-radial-gradient(center, ellipse cover,  rgba(234,234,234,1) 0%,rgba(206,206,206,1) 100%); /* IE10+ */
-  background: radial-gradient(ellipse at center,  rgba(234,234,234,1) 0%,rgba(206,206,206,1) 100%); /* W3C */
+  background: rgb(214,214,214); /* Old browsers */
+  background: -moz-radial-gradient(center, ellipse cover,  rgba(214,214,214,1) 0%, rgba(186,186,186,1) 100%); /* FF3.6+ */
+  background: -webkit-radial-gradient(center, ellipse cover,  rgba(214,214,214,1) 0%,rgba(186,186,186,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-radial-gradient(center, ellipse cover,  rgba(214,214,214,1) 0%,rgba(186,186,186,1) 100%); /* Opera 12+ */
+  background: -ms-radial-gradient(center, ellipse cover,  rgba(214,214,214,1) 0%,rgba(186,186,186,1) 100%); /* IE10+ */
+  background: radial-gradient(ellipse at center,  rgba(214,214,214,1) 0%,rgba(186,186,186,1) 100%); /* W3C */
+}
+div.row-fluid {
+  padding-top: 40px;
 }
 
-a.l {
-  color: #FFF;
+div.row-fluid a.span12 {
   text-decoration: none;
 }
 
-a.l h3 {
-  text-decoration: underline;
+div.row-fluid a.span12 h3 {
+  color: #FFF;
+  text-shadow: 1px 1px #333;
+  /*text-decoration: underline;*/
 }
 
-a.l div.url {
-  color: #C2C8CD;
+div.row-fluid a.span12 div.url {
+  color: #323853;
   margin-top: -16px;
-  margin-bottom: 10px;
+  margin-bottom: 3px;
 }
 
 iframe {
-  height: 527px;
-  width: 90%;
-  border:5px solid #CDCDCD;
+  height: 477px;
+  width: 100%;
+  /* border:5px solid #CDCDCD; */
+  border:5px solid #EEE;
   background-color: #FFF;
   -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
