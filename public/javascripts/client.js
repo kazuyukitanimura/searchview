@@ -29,7 +29,7 @@ $(function() {
     $spinner = $('<ul class="spinner"><li></li><li></li><li></li><li></li></ul>');
     $container.prepend($spinner);
 
-    var q = encodeURIComponent($q.val());
+    var q = encodeURIComponent($q.val().trim());
     // add the search query without reloading
     if(history.pushState) {
       history.pushState({"id":100}, document.title, location.protocol + "?q=" + q);
