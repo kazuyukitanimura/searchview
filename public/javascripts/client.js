@@ -40,14 +40,13 @@ $(function() {
     $.get(search_url, params, function(data) {
       // remove the spinner
       $spinner.remove();
-      $footer = $('footer');
 
       var links = JSON.parse(data);
       maxPosition = links.length - 1;
       for (var i = 0; i <= maxPosition; i++) {
         var link = links[i];
         var page = '<div id="' + baseLinkId + i + '" class="row-fluid"><a class="span12" target="_blank" href="' + link.url + '"><h3>' + link.title + '</h3><div class="url">' + link.url + '</div><iframe src="' + link.url + '" sandbox scrolling="no"></iframe></a></div>';
-        $footer.before(page);
+        $container.append(page);
       }
       $('div.row-fluid').waypoint(function(e, direction) {
         curHash = $(this).attr('id');
