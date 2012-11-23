@@ -19,6 +19,11 @@ $(function() {
     }
   });
 
+  // TODO this code does not work
+  //$q.focusin(function(e) {
+  //  $q.select();
+  //});
+
   self.request = function() {
     // clean up old results
     $('div.row-fluid').remove();
@@ -31,8 +36,11 @@ $(function() {
 
     var q = encodeURIComponent($q.val().trim());
     // add the search query without reloading
-    if(history.pushState) {
-      history.pushState({"id":100}, document.title, location.protocol + "?q=" + q);
+    if (history.pushState) {
+      history.pushState({
+        "id": 100
+      },
+      document.title, location.protocol + "?q=" + q);
     }
     var params = {
       q: q
@@ -50,10 +58,10 @@ $(function() {
       }
       $('div.row-fluid').waypoint(function(e, direction) {
         curHash = $(this).attr('id');
-      // waypoint bug, with offset it does not fire the event correctly
-      //},
-      //{
-      //  offset: offset
+        // waypoint bug, with offset it does not fire the event correctly
+        //},
+        //{
+        //  offset: offset
       });
     });
   };
@@ -149,10 +157,10 @@ $(function() {
   //    clearTimeout(eObj);
   //  }
   //});
-
   // if there are search parameters, request it
   if (location.search) {
     $q.val(decodeURIComponent(location.search.match(/[?&]q=(.*)[&#]?/)[1]));
     self.request();
   }
 });
+
