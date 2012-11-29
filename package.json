@@ -12,6 +12,7 @@
   , "ejs": ">= 0.8.3"
   , "cheerio": ">= 0.10.3"
   , "request": ">= 2.12.0"
+  , "webkit-server": "git://github.com/kazuyukitanimura/node-webkit-server.git"
   }
 , "engine": "node >= 0.8.14"
 , "author": {
