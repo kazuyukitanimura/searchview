@@ -53,7 +53,8 @@ $(function() {
       maxPosition = links.length - 1;
       for (var i = 0; i <= maxPosition; i++) {
         var link = links[i];
-        var page = '<div id="' + baseLinkId + i + '" class="row-fluid"><a class="span12" target="_blank" href="' + link.url + '"><h3>' + link.title + '</h3><div class="url">' + link.url + '</div><iframe src="' + link.url + '" sandbox scrolling="no"></iframe></a></div>';
+        //var page = '<div id="' + baseLinkId + i + '" class="row-fluid"><a class="span12" target="_blank" href="' + link.url + '"><h3>' + link.title + '</h3><div class="url">' + link.url + '</div><iframe src="' + link.url + '" sandbox scrolling="no"></iframe></a></div>';
+        var page = '<div id="' + baseLinkId + i + '" class="row-fluid"><a class="span12" target="_blank" href="' + link.url + '"><h3>' + link.title + '</h3><div class="url">' + link.url + '</div><img src="data:image/png;base64,' + link.image + '"></img></a></div>';
         $container.append(page);
       }
       $('div.row-fluid').waypoint(function(e, direction) {

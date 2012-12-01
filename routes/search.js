@@ -2,6 +2,8 @@
  * GET search page.
  */
 
+var WebKit = require('webkit-server');
+var fs = require('fs');
 var request = require('request');
 var cheerio = require('cheerio');
 var parse = require('cheerio/lib/parse');
@@ -15,35 +17,50 @@ var reqobj = {
   }
 };
 var base_url = 'http://www.google.com/search?q=';
-// for test
-var cache = {};
 
 exports.index = function(req, res) {
   console.log(req.query.q);
   reqobj.uri = base_url + req.query.q;
   var clientRes = res;
 
-  if (cache[req.query.q]) {
-    clientRes.send(cache[req.query.q]);
-  } else {
-    // TODO make request stereaming
-    request(reqobj, function(err, res, body) {
-      if (err || res.statusCode != 200) {
-        console.error('error happened', err, res);
-      } else {
-        var $ = cheerio.load(body.toString());
+  // TODO make request stereaming
+  request(reqobj, function(err, res, body) {
+    if (err || res.statusCode != 200) {
+      console.error('error happened', err, res);
+    } else {
+      var $ = cheerio.load(body.toString());
 
-        var $links = $('a.l');
-        var result = $links.map(function(i, link) {
-          return {
-            title: $(link).html(),
-            url: $(link).attr('href')
-          };
+      var $links = $('a.l');
+      var result = [];
+      $links.each(function(i, link) {
+        var $link = $(link);
+        var href = $link.attr('href');
+        new WebKit.Browser(function() {
+          this.visit(href, function(err) {
+            if (err) {
+              console.error(err);
+            } else {
+              this.highlightRender(800, 600, decodeURIComponent(req.query.q), function(err, data) {
+                if (err) {
+                  console.error(err);
+                } else {
+                  result.push({
+                    i: i,
+                    title: $link.html(),
+                    url: href,
+                    image: data
+                  });
+                  if(result.length === $links.length){
+                    clientRes.send(JSON.stringify(result));
+                  }
+                  this.stop();
+                }
+              });
+            }
+          });
         });
-        cache[req.query.q] = JSON.stringify(result);
-        clientRes.send(JSON.stringify(result));
-      }
-    });
-  }
+      });
+    }
+  });
 };
 
