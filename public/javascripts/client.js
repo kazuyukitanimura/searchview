@@ -23,7 +23,6 @@ $(function() {
   //$q.focusin(function(e) {
   //  $q.select();
   //});
-
   self.request = function() {
     // clean up old results
     $('div.row-fluid').remove();
@@ -53,7 +52,7 @@ $(function() {
       maxPosition = links.length - 1;
       for (var i = 0; i <= maxPosition; i++) {
         var link = links[i];
-        var page = '<div id="' + baseLinkId + i + '" class="row-fluid"><a class="span12" target="_blank" href="' + link.url + '"><h3>' + link.title + '</h3><div class="url">' + link.url + '</div><iframe src="' + link.url + '" sandbox scrolling="no"></iframe></a></div>';
+        var page = '<div id="' + baseLinkId + i + '" class="row-fluid"><a class="span12" target="_blank" href="' + link.url + '"><h3>' + (i + 1) + '. ' + link.title + '</h3><div class="url">' + link.url + '</div><iframe src="' + link.url + '" sandbox scrolling="no"></iframe></a></div>';
         $container.append(page);
       }
       $('div.row-fluid').waypoint(function(e, direction) {
