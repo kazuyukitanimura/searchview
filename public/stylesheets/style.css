@@ -33,6 +33,9 @@ iframe {
   width: 100%;
   /* border:5px solid #CDCDCD; */
   border:5px solid #EEE;
+  border-radius:3px;
+  -webkit-border-radius:3px;
+  -moz-border-radius:3px;
   background-color: #FFF;
   -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
