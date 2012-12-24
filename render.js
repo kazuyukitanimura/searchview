@@ -8,7 +8,7 @@ new WebKit.Browser(function() {
       console.error(error);
       this.stop();
     } else {
-      this.highlightRender(985, 'node event-driven', function(error, data) {
+      this.highlightRender('http://www.nodejs.org', 985, 'node event-driven', function(error, data) {
         if (error) {
           console.error(error);
         } else {
