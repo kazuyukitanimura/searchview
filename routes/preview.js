@@ -16,13 +16,10 @@ exports.index = function(req, res) {
           if (error) {
             console.error(error);
           } else {
-            var self = this;
             // TODO make this streaming
             var decodedImage = new Buffer(data, 'base64');
             res.end(decodedImage);
-            res.on('close', function() {
-              self.stop();
-            });
+            this.stop();
           }
         });
       }
