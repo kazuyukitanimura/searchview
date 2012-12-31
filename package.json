@@ -8,11 +8,12 @@
   , "test": "mocha"
   }
 , "dependencies": {
-    "express": ">= 3.0.4"
+    "express": ">= 3.0.5"
   , "ejs": ">= 0.8.3"
-  , "cheerio": ">= 0.10.4"
+  , "cheerio": ">= 0.10.5"
   , "request": ">= 2.12.0"
   , "webkit-server": "git://github.com/kazuyukitanimura/node-webkit-server.git"
+  , "pane": "git://github.com/kazuyukitanimura/pane.git"
   }
 , "engine": "node >= 0.8.14"
 , "author": {
