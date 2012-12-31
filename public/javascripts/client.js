@@ -52,7 +52,8 @@ $(function() {
       maxPosition = links.length - 1;
       for (var i = 0; i <= maxPosition; i++) {
         var link = links[i];
-        var page = '<div id="' + baseLinkId + i + '" class="row-fluid"><a class="span12" target="_blank" href="' + link.url + '"><h3>' + (i + 1) + '. ' + link.title + '</h3><div class="url">' + link.url + '</div><iframe src="' + link.url + '" sandbox scrolling="no"></iframe></a></div>';
+        //var page = '<div id="' + baseLinkId + i + '" class="row-fluid"><a class="span12" target="_blank" href="' + link.url + '"><h3>' + (i + 1) + '. ' + link.title + '</h3><div class="url">' + link.url + '</div><iframe class="preview" src="' + link.url + '" sandbox scrolling="no"></iframe></a></div>';
+        var page = '<div id="' + baseLinkId + i + '" class="row-fluid"><a class="span12" target="_blank" href="' + link.url + '"><h3>' + (i + 1) + '. ' + link.title + '</h3><div class="url">' + link.url + '</div><img class="preview" src="preview?q=' + q + '&url=' + encodeURIComponent(link.url) + '.png"></a></div>';
         $container.append(page);
         // when to use a tag instead of iframe, a href should be encoded url and encoded search keywords
       }

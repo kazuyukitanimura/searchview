@@ -6,6 +6,7 @@ var express = require('express');
 var routes = require('./routes');
 var user = require('./routes/user');
 var search = require('./routes/search');
+var preview = require('./routes/preview');
 var others = require('./routes/others');
 var http = require('http');
 var path = require('path');
@@ -34,6 +35,7 @@ app.configure('development', function() {
 app.get('/', routes.index);
 app.get('/users', user.list);
 app.get('/search', search.index);
+app.get('/preview', preview.index);
 app.get('/robots.txt', others.robots);
 app.get('/humans.txt', others.humans);
 

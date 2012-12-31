@@ -28,11 +28,9 @@ div.row-fluid a.span12 div.url {
   margin-bottom: 3px;
 }
 
-iframe {
+.preview {
   height: 477px;
   width: 100%;
-  /* border:5px solid #CDCDCD; */
-  /* border:5px solid #EEE; */
   border:5px solid #888;
   border-radius:3px;
   -webkit-border-radius:3px;
