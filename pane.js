@@ -15,5 +15,6 @@ window.on('console', function(msg, line, src) {
 
 window.on('loaded', function(succ) {
   window.screenshot(__dirname + '/test.png');
+  process.exit();
 });
 
