@@ -1,20 +1,23 @@
 var Pane = require('Pane');
+var fs = require('fs');
 
 var opt = {
-  title: 'Test',
-  height: 500,
-  width: 800,
   url: 'http://nodejs.org'
 };
 
-var window = new Pane(opt);
+var pane = new Pane(opt);
 
-window.on('console', function(msg, line, src) {
+pane.on('console', function(msg, line, src) {
   console.log(msg, line, src);
 });
 
-window.on('loaded', function(succ) {
-  window.screenshot(__dirname + '/test.png');
-  process.exit();
+pane.on('loaded', function(succ) {
+  var imageBuf = pane.screenshot('node event-driven');
+  fs.writeFile('test0.png', imageBuf, function(error) {
+    if (error) {
+      console.error(error);
+    }
+    process.exit();
+  });
 });
 
