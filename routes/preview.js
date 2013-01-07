@@ -2,28 +2,24 @@
  * GET preview png.
  */
 
-var WebKit = require('webkit-server');
+var Pane = require('Pane');
 
 exports.index = function(req, res) {
-  new WebKit.Browser(function() {
-    this.visit(decodeURIComponent(req.query.url.replace(/(\.png)?$/, '')), function(error) {
-      if (error) {
-        console.error(error);
-        this.stop();
-      } else {
-        // 985 is the default page width number used by Apple
-        this.highlightRender(985, decodeURIComponent(req.query.q), function(error, data) {
-          if (error) {
-            console.error(error);
-          } else {
-            // TODO make this streaming
-            var decodedImage = new Buffer(data, 'base64');
-            res.end(decodedImage);
-            this.stop();
-          }
-        });
-      }
-    });
+  var opt = {
+    url: decodeURIComponent(req.query.url.replace(/(\.png)?$/, ''))
+  };
+  var pane = new Pane(opt);
+
+  pane.on('console', function(msg, line, src) {
+    console.log(msg, line, src);
+  });
+  pane.on('loaded', function(succ) {
+    if (succ) {
+      var imageBuf = pane.screenshot(decodeURIComponent(req.query.q));
+      res.end(imageBuf);
+    } else {
+      res.end();
+    }
   });
 };
 
