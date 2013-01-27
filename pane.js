@@ -12,6 +12,7 @@ pane.on('console', function(msg, line, src) {
 });
 
 pane.on('loaded', function(succ) {
+  pane.markWordsTest();
   var imageBuf = pane.screenshot('node event-driven');
   fs.writeFile('test0.png', imageBuf, function(error) {
     if (error) {
